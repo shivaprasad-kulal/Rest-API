@@ -7,10 +7,22 @@ Router.get("/users",async (req,resp)=>{
     resp.json(userlist);
 
     }
-    catch(err)
-    {
-        resp.send("ERROR",err);
+     catch(err) {
+		resp.status(404)
+		resp.send({ error: "No data exist!"})
+	}
+
+
+})
+Router.get("/users/:id", async (req,resp)=>{
+    try{
+        const user=await Users.find({email:req.params.id});
+        resp.json(user);
     }
+    catch(err) {
+		resp.status(404)
+		resp.send({ error: "No data exist!"})
+	}
 
 })
 
@@ -25,11 +37,38 @@ Router.post("/users",async (req,resp)=>{
     resp.json(newuser);
 
     }
-    catch(err)
-    {
-        resp.send("ERROR",err);
-    }
+     catch(err) {
+		resp.status(404)
+		resp.send({ error: "No data exist!"})
+	}
 
 }
 )
+
+Router.patch("/users/:id", async (req,resp)=>{
+     try{
+        const user=await Users.findById(req.params.id);
+        user.name=req.body.name
+        const updateduser=await user.save()
+        resp.send(updateduser)
+    }
+    catch(err) {
+		resp.status(404)
+		resp.send({ error: "No data exist!"})
+	}
+
+})
+Router.delete("/users/:id", async (req,resp)=>{
+     try{
+        await Users.deleteOne({_id:req.params.id});
+        
+        resp.status(204).send("successfully deleted")
+        
+    }
+    catch(err) {
+		resp.status(404)
+		resp.send({ error: "There is no data" +err})
+	}
+
+})
 module.exports=Router
