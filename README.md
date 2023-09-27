@@ -38,7 +38,7 @@ This project implements a RESTful API for user management, allowing users to sig
 
 <br/>
 <br/>
-<h3>By</h3>
+<h3>Author</h3>
 <p><b>Shivaprasad</b> - https://github.com/shivaprasad-kulal</p>
 <i> shivaprasadurudai@gmail.com</i>
 
