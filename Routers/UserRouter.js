@@ -111,7 +111,7 @@ Router.get("/allusers", verifyToken, async (req, res) => {
 });
 //================================Update ======================================================================
 
-Router.patch("/users/:id", async (req, resp) => {
+Router.patch("/users/:id",verifyToken, async (req, resp) => {
   try {
     const user = await Users.findById(req.params.id);
     user.name = req.body.name;
@@ -124,11 +124,11 @@ Router.patch("/users/:id", async (req, resp) => {
 });
 
 //==============================Delete=============================================================================
-Router.delete("/users/:id", async (req, resp) => {
+Router.delete("/users/:id", verifyToken,async (req, resp) => {
   try {
     await Users.deleteOne({ _id: req.params.id });
 
-    resp.status(204).send("successfully deleted");
+    resp.status(204).send({message: "successfully deleted"} );
   } catch (err) {
     resp.status(404);
     resp.send({ error: "There is no data" + err });
